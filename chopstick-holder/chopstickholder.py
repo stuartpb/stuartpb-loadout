@@ -7,8 +7,8 @@ top_l = 81
 top_d = 8.1
 mid_d = 6
 bottom_l = 96
-tip_d = 3.33
-screw_d = 3
+tip_d = 4
+screw_d = 4
 screw_l = 6
 
 top_off = 7
