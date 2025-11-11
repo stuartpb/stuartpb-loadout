@@ -3,10 +3,10 @@ from build123d import *
 from ocp_vscode import *
 
 # %%
-top_l = 81
+top_l = 83
 top_d = 8.1
-mid_d = 6
-bottom_l = 96
+mid_d = 6.2
+bottom_l = 98
 tip_d = 4
 screw_d = 4
 screw_l = 6
@@ -54,13 +54,13 @@ with BuildPart() as combo_neg:
     add(bottom)
 
 with BuildPart() as tophalf:
-  with BuildSketch(Pos(0,0,-41)):
-    Ellipse(7,12)
-  with BuildSketch(Pos(0,0,41)):
-    Ellipse(7,12)
-  with BuildSketch(Pos(0,0,45)):
-    Ellipse(7,5)
-  with BuildSketch(Pos(0,0,52)):
+  with BuildSketch(Pos(0,0,-42)):
+    Ellipse(7.8,12)
+  with BuildSketch(Pos(0,0,42)):
+    Ellipse(7.8,12)
+  with BuildSketch(Pos(0,0,46)):
+    Ellipse(7.8,5)
+  with BuildSketch(Pos(0,0,53)):
     Ellipse(6,3)
   loft(ruled=True)
   fillet(tophalf.edges().group_by(Axis.Z)[-1], radius=1.5)
