@@ -45,7 +45,7 @@ with BuildPart() as combo:
 
 with BuildPart() as combo_neg:
   with Locations((0,top_off)):
-    add(top)
+    add(top_str)
   with Locations(Location((0,-top_off,0),(0,180,0))):
     add(top)
   with Locations((bottom_off,0,-screw_l/3)):
