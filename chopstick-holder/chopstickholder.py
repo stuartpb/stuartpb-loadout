@@ -45,7 +45,7 @@ with BuildPart() as combo:
 
 with BuildPart() as combo_neg:
   with Locations((0,top_off)):
-    add(top_str)
+    add(top)
   with Locations(Location((0,-top_off,0),(0,180,0))):
     add(top)
   with Locations((bottom_off,0,-screw_l/3)):
@@ -54,7 +54,7 @@ with BuildPart() as combo_neg:
     add(bottom)
 
 with BuildPart() as tophalf:
-  with BuildSketch():
+  with BuildSketch(Pos(0,0,-41)):
     Ellipse(7,12)
   with BuildSketch(Pos(0,0,41)):
     Ellipse(7,12)
@@ -65,6 +65,8 @@ with BuildPart() as tophalf:
   loft(ruled=True)
   fillet(tophalf.edges().group_by(Axis.Z)[-1], radius=1.5)
   add(combo_neg,mode=Mode.SUBTRACT)
+  tophalf.part.locate(Rot(60,0,0))
+  Box(100,100,100,align=(Align.CENTER, Align.CENTER,Align.MAX), mode=Mode.SUBTRACT)
 
 show(tophalf)
 
