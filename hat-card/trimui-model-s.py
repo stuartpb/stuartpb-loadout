@@ -8,8 +8,9 @@ height = 56
 depth = 10
 corner_radius = 6
 thickness = 0.8
-lip = 1
-inr = 0.8
+lip = 1.6
+intr = 1.6
+inbr = 0.8
 
 # %%
 
@@ -35,10 +36,14 @@ cutouts = Part() + [
   for pos in [Pos(32.5,28,0.2), Pos(-33.5,28,0.2)]
 ]
 
+inside = extrude(footprint.sketch, amount=depth/2+0.4, both=True)
+inside = chamfer(inside.edges().group_by(Axis.Z)[-1], length=intr)
+inside = fillet(inside.edges().group_by(Axis.Z)[0], radius=inbr)
+
 with BuildPart() as case:
   extrude(footprint.sketch, amount=depth/2, both=True)
   offset(amount=thickness)
-  offset(extrude(offset(footprint.sketch, amount=-inr), amount=(depth-inr)/2, both=True),amount=inr, mode=Mode.SUBTRACT)
+  add(inside,mode=Mode.SUBTRACT)
   extrude(offset(footprint.sketch, amount=-lip), amount=depth,mode=Mode.SUBTRACT)
   add(cutouts,mode=Mode.SUBTRACT)
 
