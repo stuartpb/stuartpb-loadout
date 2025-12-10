@@ -31,7 +31,7 @@ cutouts = Part() + [
 ] + [
   # Shoulder buttons
   pos * Rot(90,0,0) * extrude(
-    offset(RectangleRounded(6, 4, 0.2),0.5),amount=thickness,both=True)
+    offset(RectangleRounded(6, 4, 0.2),2),amount=thickness,both=True)
   for pos in [Pos(33,28,0.5), Pos(-33,28,0.5)]
 ]
 
