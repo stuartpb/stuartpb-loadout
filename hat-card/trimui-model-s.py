@@ -18,21 +18,21 @@ with BuildSketch(Plane.XY) as footprint:
 
 cutouts = Part() + [
   # MicroSD card slot
-  Pos(-35,-28,-1.5) * Rot(90,0,0) * extrude(
+  Pos(-35.25,-28,-1.8) * Rot(90,0,0) * extrude(
     offset(SlotOverall(12,1.5),0.5),amount=thickness,both=True),
 
   # USB-C port
-  Pos(23,-28,1.5) * Rot(90,0,0) * extrude(
+  Pos(23.5,-28,1.2) * Rot(90,0,0) * extrude(
     offset(SlotOverall(8.4,2.6),0.5),amount=thickness,both=True),
 
   # Power switch
-  Pos(53,-15,0.5) * Rot(0,90,0) * extrude(
+  Pos(53,-15.5,0.5) * Rot(0,90,0) * extrude(
     offset(RectangleRounded(3, 5, 0.2),2),amount=thickness,both=True),
 ] + [
   # Shoulder buttons
   pos * Rot(90,0,0) * extrude(
     offset(RectangleRounded(6, 4, 0.2),2),amount=thickness,both=True)
-  for pos in [Pos(33,28,0.5), Pos(-33,28,0.5)]
+  for pos in [Pos(32.5,28,0.2), Pos(-33.5,28,0.2)]
 ]
 
 with BuildPart() as case:
