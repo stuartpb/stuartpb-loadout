@@ -8,8 +8,8 @@ height = 56
 depth = 10
 corner_radius = 6
 thickness = 0.8
-lip = 2
-intr = 2
+lip = 1.6
+intr = 1.6
 inbr = 0.8
 
 # %%
