@@ -33,7 +33,7 @@ cutouts = Part() + [
   # Shoulder buttons
   pos * Rot(90,0,0) * extrude(
     offset(RectangleRounded(6, 4, 0.2),2),amount=thickness,both=True)
-  for pos in [Pos(32.5,28,0.2), Pos(-33.5,28,0.2)]
+  for pos in [Pos(32.75,28,0.2), Pos(-33.25,28,0.2)]
 ]
 
 inside = extrude(footprint.sketch, amount=depth/2+0.4, both=True)
