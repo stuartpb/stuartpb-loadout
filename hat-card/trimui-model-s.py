@@ -47,10 +47,24 @@ with BuildPart() as case:
   extrude(offset(footprint.sketch, amount=-lip), amount=depth,mode=Mode.SUBTRACT)
   add(cutouts,mode=Mode.SUBTRACT)
 
+inside = extrude(offset(footprint.sketch,amount=thickness), amount=depth/2+thickness+0.4, both=True)
+inside = chamfer(inside.edges().group_by(Axis.Z)[-1], length=intr)
+inside = fillet(inside.edges().group_by(Axis.Z)[0], radius=inbr)
+
+with BuildPart() as outercase:
+  extrude(footprint.sketch, amount=depth/2, both=True)
+  offset(amount=2*thickness)
+  add(inside,mode=Mode.SUBTRACT)
+  extrude(offset(footprint.sketch, amount=-lip+thickness), amount=depth,mode=Mode.SUBTRACT)
+
 # %%
-show(case,reset_camera=Camera.KEEP)
+show(outercase,reset_camera=Camera.KEEP)
 
 exporter = Mesher()
 exporter.add_shape(case.part)
 exporter.write("trimui-model-s.3mf")
+
+exporter = Mesher()
+exporter.add_shape(outercase.part)
+exporter.write("card-lid.3mf")
 # %%
