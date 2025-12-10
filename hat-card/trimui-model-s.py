@@ -8,9 +8,12 @@ height = 56
 depth = 10
 corner_radius = 6
 thickness = 0.8
-lip = 1.6
-intr = 1.6
-inbr = 0.8
+case_lip = 1.6
+case_intr = 1.6
+case_inbr = 0.8
+lid_lip = 1.2
+lid_intr = 1.2
+lid_inbr = 0.8
 
 # %%
 
@@ -37,25 +40,25 @@ cutouts = Part() + [
 ]
 
 inside = extrude(footprint.sketch, amount=depth/2+0.4, both=True)
-inside = chamfer(inside.edges().group_by(Axis.Z)[-1], length=intr)
-inside = fillet(inside.edges().group_by(Axis.Z)[0], radius=inbr)
+inside = chamfer(inside.edges().group_by(Axis.Z)[-1], length=case_intr)
+inside = fillet(inside.edges().group_by(Axis.Z)[0], radius=case_inbr)
 
 with BuildPart() as case:
   extrude(footprint.sketch, amount=depth/2, both=True)
   offset(amount=thickness)
   add(inside,mode=Mode.SUBTRACT)
-  extrude(offset(footprint.sketch, amount=-lip), amount=depth,mode=Mode.SUBTRACT)
+  extrude(offset(footprint.sketch, amount=-case_lip), amount=depth,mode=Mode.SUBTRACT)
   add(cutouts,mode=Mode.SUBTRACT)
 
 inside = extrude(offset(footprint.sketch,amount=thickness), amount=depth/2+thickness+0.4, both=True)
-inside = chamfer(inside.edges().group_by(Axis.Z)[-1], length=intr)
-inside = fillet(inside.edges().group_by(Axis.Z)[0], radius=inbr)
+inside = chamfer(inside.edges().group_by(Axis.Z)[-1], length=lid_intr)
+inside = fillet(inside.edges().group_by(Axis.Z)[0], radius=lid_inbr)
 
 with BuildPart() as outercase:
   extrude(footprint.sketch, amount=depth/2, both=True)
   offset(amount=2*thickness)
-  add(inside,mode=Mode.SUBTRACT)
-  extrude(offset(footprint.sketch, amount=-lip+thickness), amount=depth,mode=Mode.SUBTRACT)
+  add(Pos(0,0,0.4) * inside,mode=Mode.SUBTRACT)
+  # extrude(offset(footprint.sketch, amount=-case_lip+thickness), amount=depth,mode=Mode.SUBTRACT)
 
 # %%
 show(outercase,reset_camera=Camera.KEEP)
