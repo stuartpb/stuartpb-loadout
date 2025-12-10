@@ -9,7 +9,7 @@ depth = 10
 corner_radius = 6
 thickness = 0.8
 lip = 1
-inr = 0.6
+inr = 0.8
 
 # %%
 
