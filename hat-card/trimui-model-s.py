@@ -27,7 +27,7 @@ cutouts = Part() + [
     offset(SlotOverall(8.4,2.6),0.5),amount=thickness,both=True),
 
   # Power switch
-  Pos(53,-15.5,0.5) * Rot(0,90,0) * extrude(
+  Pos(53,-14.5,0.5) * Rot(0,90,0) * extrude(
     offset(RectangleRounded(3, 5, 0.2),2),amount=thickness,both=True),
 ] + [
   # Shoulder buttons
