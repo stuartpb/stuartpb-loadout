@@ -43,12 +43,12 @@ inside = extrude(footprint.sketch, amount=depth/2+0.4, both=True)
 inside = chamfer(inside.edges().group_by(Axis.Z)[-1], length=case_intr)
 inside = fillet(inside.edges().group_by(Axis.Z)[0], radius=case_inbr)
 
-with BuildPart() as case:
+with BuildPart() as brutecase:
   extrude(footprint.sketch, amount=depth/2, both=True)
   offset(amount=thickness)
-  add(inside,mode=Mode.SUBTRACT)
   extrude(offset(footprint.sketch, amount=-case_lip), amount=depth,mode=Mode.SUBTRACT)
-  add(cutouts,mode=Mode.SUBTRACT)
+
+case = brutecase.part - inside - cutouts
 
 carveouts = Part() + [
   ## left (pad) cutout
@@ -71,11 +71,12 @@ with BuildPart() as outercase:
   offset(amount=2*thickness)
   add(Pos(0,0,0.8) * inside,mode=Mode.SUBTRACT)
   add(carveouts,mode=Mode.SUBTRACT)
+  add(Pos(0,0,0.4) * Rot(0,180,0) * brutecase.part,mode=Mode.SUBTRACT)
 # %%
 show(outercase,reset_camera=Camera.KEEP)
 
 exporter = Mesher()
-exporter.add_shape(case.part)
+exporter.add_shape(case)
 exporter.write("trimui-model-s.3mf")
 
 exporter = Mesher()
