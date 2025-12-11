@@ -52,11 +52,14 @@ with BuildPart() as case:
 
 carveouts = Part() + [
   ## left (pad) cutout
-  Pos(36,2.5,-depth/2-0.8) * extrude(
+  Pos(39,2,-depth/2-1) * extrude(
     Circle(12),amount=depth),
   ## right (buttons) cutout
-  Pos(-36,2.5,-depth/2-0.4) * extrude(
-    Circle(12),amount=depth)
+  Pos(-39,2,-depth/2-0.8) * extrude(
+    Circle(12),amount=depth),
+  ## start/menu/select
+  Pos(0,-21,-depth/2-0.8) * extrude(
+    offset(SlotOverall(34,3),0.5), amount=depth)
 ]
 
 inside = extrude(offset(footprint.sketch,amount=thickness), amount=depth/2+thickness, both=True)
