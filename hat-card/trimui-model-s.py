@@ -11,8 +11,8 @@ thickness = 0.8
 case_lip = 1.6
 case_intr = 1.6
 case_inbr = 0.8
-lid_lip = 1.2
-lid_intr = 1.2
+lid_lip = 0.8
+lid_intr = 0.8
 lid_inbr = 0.8
 
 # %%
@@ -50,16 +50,24 @@ with BuildPart() as case:
   extrude(offset(footprint.sketch, amount=-case_lip), amount=depth,mode=Mode.SUBTRACT)
   add(cutouts,mode=Mode.SUBTRACT)
 
-inside = extrude(offset(footprint.sketch,amount=thickness), amount=depth/2+thickness+0.4, both=True)
+carveouts = Part() + [
+  ## left (pad) cutout
+  Pos(36,2.5,-depth/2-0.8) * extrude(
+    Circle(12),amount=depth),
+  ## right (buttons) cutout
+  Pos(-36,2.5,-depth/2-0.4) * extrude(
+    Circle(12),amount=depth)
+]
+
+inside = extrude(offset(footprint.sketch,amount=thickness), amount=depth/2+thickness, both=True)
 inside = chamfer(inside.edges().group_by(Axis.Z)[-1], length=lid_intr)
 inside = fillet(inside.edges().group_by(Axis.Z)[0], radius=lid_inbr)
 
 with BuildPart() as outercase:
   extrude(footprint.sketch, amount=depth/2, both=True)
   offset(amount=2*thickness)
-  add(Pos(0,0,0.4) * inside,mode=Mode.SUBTRACT)
-  # extrude(offset(footprint.sketch, amount=-case_lip+thickness), amount=depth,mode=Mode.SUBTRACT)
-
+  add(Pos(0,0,0.8) * inside,mode=Mode.SUBTRACT)
+  add(carveouts,mode=Mode.SUBTRACT)
 # %%
 show(outercase,reset_camera=Camera.KEEP)
 
